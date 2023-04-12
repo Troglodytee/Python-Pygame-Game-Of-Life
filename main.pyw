@@ -3,53 +3,51 @@ import contextlib
 with contextlib.redirect_stdout(None) :
     import pygame
 from pygame.locals import *
+from time import sleep
 
 def mouve() :
-    global temps
     global grille
     global taille
-    if temps >= t :
-        temps = 0
-        grille2 = []
-        for i in range (len(grille)) :
-            total = 0
-            if i > taille-1 :
-                if grille[i-taille] == 1 :
-                    total += 1
-            if i > taille-1 and not i%taille == taille-1 :
-                if grille[i-(taille-1)] == 1 :
-                    total += 1
-            if not i%taille == taille-1 :
-                if grille[i+1] == 1 :
-                    total += 1
-            if i < taille**2-taille and not i%taille == taille-1 :
-                if grille[i+(taille+1)] == 1 :
-                    total += 1
-            if i < taille**2-taille :
-                if grille[i+taille] == 1 :
-                    total += 1
-            if i < taille**2-taille and not i%taille == 0 :
-                if grille[i+(taille-1)] == 1 :
-                    total += 1
-            if not i%taille == 0 :
-                if grille[i-1] == 1 :
-                    total += 1
-            if i > taille-1 and not i%taille == 0 :
-                if grille[i-(taille+1)] == 1 :
-                    total += 1
+    grille2 = []
+    for i in range (len(grille)) :
+        total = 0
+        if i > taille-1 :
+            if grille[i-taille] == 1 :
+                total += 1
+        if i > taille-1 and not i%taille == taille-1 :
+            if grille[i-(taille-1)] == 1 :
+                total += 1
+        if not i%taille == taille-1 :
+            if grille[i+1] == 1 :
+                total += 1
+        if i < taille**2-taille and not i%taille == taille-1 :
+            if grille[i+(taille+1)] == 1 :
+                total += 1
+        if i < taille**2-taille :
+            if grille[i+taille] == 1 :
+                total += 1
+        if i < taille**2-taille and not i%taille == 0 :
+            if grille[i+(taille-1)] == 1 :
+                total += 1
+        if not i%taille == 0 :
+            if grille[i-1] == 1 :
+                total += 1
+        if i > taille-1 and not i%taille == 0 :
+            if grille[i-(taille+1)] == 1 :
+                total += 1
 
-            if grille[i] == 0 and total == 3 :
+        if grille[i] == 0 and total == 3 :
+            grille2 += [1]
+        elif grille[i] == 1 :
+            if total == 2 or total == 3 :
                 grille2 += [1]
-            elif grille[i] == 1 :
-                if total == 2 or total == 3 :
-                    grille2 += [1]
-                else :
-                    grille2 += [0]
             else :
                 grille2 += [0]
+        else :
+            grille2 += [0]
 
-        grille = grille2
-        affichage()
+    grille = grille2
+    affichage()
 
 def affichage() :
     global ecran
@@ -144,7 +142,6 @@ taille = 60
 resize_grille()
 outil = 1
 pause = 1
-temps = 0
 t = 500
 appuie = 0
 
@@ -224,10 +221,10 @@ while b == 1 :
 
                 elif event.pos[0] > 5 and event.pos[0] < 15 and event.pos[1] > 245 and event.pos[1] < 255 :
                     if t > 0 :
-                        t -= 500
+                        t -= 100
                 elif event.pos[0] > 35 and event.pos[0] < 45 and event.pos[1] > 245 and event.pos[1] < 255 :
-                    if t < 20000 :
-                        t += 500
+                    if t < 1000 :
+                        t += 100
 
                 elif event.pos[0] > 5 and event.pos[0] < 45 and event.pos[1] > 275 and event.pos[1] < 315 :
                     pause = 1
@@ -350,5 +347,5 @@ while b == 1 :
             affichage()
 
     if ecran == 1 and pause == 0 :
-        temps += 1
         mouve()
+        sleep(t/1000)
