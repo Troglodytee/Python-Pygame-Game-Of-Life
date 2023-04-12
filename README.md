@@ -13,10 +13,10 @@ This is the Conway Game of Life coded using Pygame.
 3. Run `main.pyw`
 ## Requirements
 - Python 3.7
-- Python os library
-- Python contextlib library
-- Python pygame library
-- Python time library
+- Python `os` library
+- Python `contextlib` library
+- Python `pygame` library
+- Python `time` library
 ## Usage
 You can add preset structures using the `+` button, then you will need to type a name of a structure that you can find in the `Figures.txt` file.
 You can rotate the pattern using `E`.
